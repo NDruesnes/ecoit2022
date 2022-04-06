@@ -1,0 +1,40 @@
+
+/* navbar-header */
+.logo_ecoit{
+    width: auto;
+    height: 70px;
+}
+
+/*register-form*/
+.register_form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#registration_instructor_form_specialities{
+    display: flex;
+    flex-direction: column;
+}
+.register_form_speciality{
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* footer */
+footer {
+    height: 80px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: black;
+    text-align: center;
+}
+.footer p{
+    margin-top: 20px;
+}
+.slogan{
+    font-weight: 700;
+    font-size: 20px;
+}

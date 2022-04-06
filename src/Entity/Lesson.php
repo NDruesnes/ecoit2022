@@ -50,9 +50,15 @@ class Lesson
      */
     private $ressources;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Student::class, mappedBy="lessonStatut")
+     */
+    private $students;
+
     public function __construct()
     {
         $this->ressources = new ArrayCollection();
+        $this->students = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -142,6 +148,36 @@ class Lesson
     {
         if ($this->ressources->removeElement($ressource)) {
             $ressource->removeLesson($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Student>
+     */
+    public function getStudents(): Collection
+    {
+        return $this->students;
+    }
+
+    public function addStudent(Student $student): self
+    {
+        if (!$this->students->contains($student)) {
+            $this->students[] = $student;
+            $student->setLessonStatut($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStudent(Student $student): self
+    {
+        if ($this->students->removeElement($student)) {
+            // set the owning side to null (unless already changed)
+            if ($student->getLessonStatut() === $this) {
+                $student->setLessonStatut(null);
+            }
         }
 
         return $this;

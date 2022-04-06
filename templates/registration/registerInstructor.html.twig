@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription instructeur{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    <div class="register_form">
+        {# <h1>Inscription instructeur</h1> #}
+        {{ form_start(registrationInstructorForm) }}
+
+            {{ form_row(registrationInstructorForm.pseudo) }}
+
+            {{ form_row(registrationInstructorForm.email) }}
+
+            {{ form_widget(registrationInstructorForm.plainPassword)}}
+
+            <div class="register_form_speciality">
+                {# {{ form_row(registrationInstructorForm.specialities) }} #}
+                {{ form_label(registrationInstructorForm.specialities) }}
+                <div class="register_form_speciality_input">
+                    {{ form_widget(registrationInstructorForm.specialities, {
+                        'attr' : {'class' : 'register_form_speciality_checkbox'}
+                        }
+                    ) }}
+                </div>
+            </div>
+
+            {{ form_widget(registrationInstructorForm.profilimg) }}
+            <button type="submit" class="btn register_form_btn">S'incrire</button>
+        {{ form_end(registrationInstructorForm) }}
+    </div>
+{% endblock %}

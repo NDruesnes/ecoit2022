@@ -24,14 +24,20 @@ class Speciality
      */
     private $speciality;
 
+    // /**
+    //  * @ORM\ManyToMany(targetEntity=Instructor::class, mappedBy="instructor")
+    //  */
+    // private $instructor;
+
     /**
-     * @ORM\ManyToMany(targetEntity=Instructor::class, inversedBy="specialities")
+     * @ORM\ManyToMany(targetEntity=Instructor::class, mappedBy="specialities")
      */
-    private $instructor;
+    private $instructors;
 
     public function __construct()
     {
         $this->instructor = new ArrayCollection();
+        $this->instructors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -74,4 +80,13 @@ class Speciality
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Instructor>
+     */
+    public function getInstructors(): Collection
+    {
+        return $this->instructors;
+    }
+
 }

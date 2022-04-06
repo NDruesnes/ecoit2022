@@ -30,11 +30,6 @@ class Training
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Instructor::class, inversedBy="trainings")
-     */
-    private $instructors;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Student::class, inversedBy="trainings")
      */
     private $students;
@@ -49,11 +44,17 @@ class Training
      */
     private $create_at;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Instructor::class, mappedBy="trainings")
+     */
+    private $instructors;
+
     public function __construct()
     {
         $this->instructor = new ArrayCollection();
         $this->students = new ArrayCollection();
         $this->sections = new ArrayCollection();
+        $this->instructors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,29 +86,6 @@ class Training
         return $this;
     }
 
-    /**
-     * @return Collection<int, Instructor>
-     */
-    public function getInstructors(): Collection
-    {
-        return $this->instructors;
-    }
-
-    public function addInstructor(Instructor $instructor): self
-    {
-        if (!$this->instructor->contains($instructor)) {
-            $this->instructor[] = $instructor;
-        }
-
-        return $this;
-    }
-
-    public function removeInstructor(Instructor $instructor): self
-    {
-        $this->instructor->removeElement($instructor);
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Student>
@@ -171,6 +149,33 @@ class Training
     public function setCreateAt(\DateTimeInterface $create_at): self
     {
         $this->create_at = $create_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Instructor>
+     */
+    public function getInstructors(): Collection
+    {
+        return $this->instructors;
+    }
+
+    public function addInstructor(Instructor $instructor): self
+    {
+        if (!$this->instructors->contains($instructor)) {
+            $this->instructors[] = $instructor;
+            $instructor->addTraining($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInstructor(Instructor $instructor): self
+    {
+        if ($this->instructors->removeElement($instructor)) {
+            $instructor->removeTraining($this);
+        }
 
         return $this;
     }

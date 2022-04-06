@@ -29,9 +29,15 @@ class InstructorStatut
      */
     private $instructor;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Instructor::class, mappedBy="instructorStatut")
+     */
+    private $instructors;
+
     public function __construct()
     {
         $this->instructor = new ArrayCollection();
+        $this->instructors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,5 +85,13 @@ class InstructorStatut
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Instructor>
+     */
+    public function getInstructors(): Collection
+    {
+        return $this->instructors;
     }
 }
